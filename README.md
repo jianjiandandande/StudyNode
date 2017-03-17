@@ -2,7 +2,7 @@
 小型知识点总汇
 
 1.[JAVA中的九种数据类型]
-  java中包含了九种数据类型主要包括：boolean,byte,char,short,int,long, float,double,void.
+-java中包含了九种数据类型主要包括：boolean,byte,char,short,int,long, float,double,void.
 *	boolean 的包裹类型为：Boolean，它的取值只有两种：true,false.
 * void 包裹类型为 Void
 *	byte 占一个字节，位数为8bit  包裹类型为：Byte，它的取值范围为-2^7～2^7 - 1.
