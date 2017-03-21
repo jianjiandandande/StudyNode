@@ -48,8 +48,7 @@ Object obj = new Object();这里的**obj**引用便是一个强引用。如果�
 ### 6.[ ArrayList、LinkedList、Vector的区别]
 * ArrayList，Vector，LinkedList都实现了List
 * Arraylist和Vector是采用数组方式存储数据,Vector是线程安全的而ArrayList不是线程安全的
-* LinkedList使用双向链表实现存储，按序号索引数据需要进行向前或向后遍历，但是插入数据时只需要记录本项前后项即可，插入数据较快,LinkedList是不同步的。
-
+* LinkedList使用双向链表实现存储，按序号索引数据需要进行向前或向后遍历，但是插入数据时只需要记录本项前后项即可，插入数据较快,LinkedList是不同步的。它既可以被当作队列使用，也可以被当作栈来使用。
 ### 7.[ Hashcode的作用]
 * hashcode方法返回该对象的哈希码值。
 * 在Java应用程序同一次执行期间，在同一对象上多次调用 hashCode 方法时，必须一致地返回相同的整数，前提是对象上 equals 比较中所用的信息没有被修改。
@@ -67,3 +66,61 @@ Object obj = new Object();这里的**obj**引用便是一个强引用。如果�
 >总结：如果要操作少量的数据使用String;单线程操作字符串缓冲区下操作大量数据使用StringBuilder;多线程操作字符串缓冲区下操作大量数据使用StringBuffer
 ### 9.[HashMap和Hashtable的区别]
 >HashMap是Hashtable的轻量级实现，是非线程安全的实现，由于非线程安全，效率上可能高于Hashtable。它们都实现了Map接口，它们的区别在于： HashMap允许将null作为一个元素的key或者value，而Hashtable不允许。 HashMap把Hashtable的contains方法去掉了，改成containsvalue和containsKey。因为contains方法容易让人引起误解。 Hashtable继承自Dictionary类，而HashMap是Java1.2引进的对Map接口的一个实现。 最大的不同是，Hashtable的方法是Synchronize的，而HashMap不是，在多个线程访问Hashtable时，不需要自己为它的方法实现同步，而HashMap 就必须为之提供外同步。 Hashtable和HashMap采用的hash/rehash算法都大概一样，所以性能不会有很大的差别。
+### 10.[ Map、Set、List、Queue、Stack的特点与用法]
+* Map保存的是"键值对"，就像一个小型数据库。我们可以通过"键"找到该键对应的"值"
+* Set不能有重复元素
+* List必须保持元素特定的顺序
+* Queue保持一个队列(先进先出)的顺序
+* Stack是Vector提供的一个子类，用于模拟"栈"这种数据结构(后进先出)的顺序
+### 11.[HashMap和ConcurrentHashMap的区别]
+>HashMap本质是数组加链表。根据key取得hash值，然后计算出数组下标，如果多个key对应到同一个下标，就用链表串起来，新插入的在前面。
+>ConcurrentHashMap：在hashMap的基础上，ConcurrentHashMap将数据分为多个segment，默认16个（concurrency level），然后每次操作对一个segment加锁，避免多线程锁的几率，提高并发效率。
+
+* 先看看HashMap类中的一些关键属性：
+' ' '
+  transient Entry[] table;//存储元素的实体数组
+
+  transient int size;//存放元素的个数
+
+  int threshold; //临界值   当实际大小超过临界值时，会进行扩容threshold = 加载因子*容量
+
+  final float loadFactor; //加载因子
+
+  transient int modCount;//被修改的次数
+' ' '
+
+* 下面看看HashMap的几个构造方法：
+' ' '
+public HashMap(int initialCapacity, float loadFactor) {
+        //确保数字合法
+        if (initialCapacity < 0)
+            throw new IllegalArgumentException("Illegal initial capacity: " +
+                                               initialCapacity);
+        if (initialCapacity > MAXIMUM_CAPACITY)
+            initialCapacity = MAXIMUM_CAPACITY;
+        if (loadFactor <= 0 || Float.isNaN(loadFactor))
+            throw new IllegalArgumentException("Illegal load factor: " +
+                                               loadFactor);
+
+        // Find a power of 2 >= initialCapacity
+        int capacity = 1;   //初始容量
+        while (capacity < initialCapacity)   //确保容量为2的n次幂，使capacity为大于initialCapacity的最小的2的n次幂
+            capacity <<= 1;
+
+        this.loadFactor = loadFactor;
+        threshold = (int)(capacity * loadFactor);
+        table = new Entry[capacity];
+        init();
+    }
+
+    public HashMap(int initialCapacity) {
+        this(initialCapacity, DEFAULT_LOAD_FACTOR);
+    }
+
+    public HashMap() {
+        this.loadFactor = DEFAULT_LOAD_FACTOR;
+        threshold = (int)(DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
+        table = new Entry[DEFAULT_INITIAL_CAPACITY];
+        init();
+    }
+' ' ' 
