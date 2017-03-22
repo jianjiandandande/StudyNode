@@ -111,8 +111,8 @@ static class Entry<K,V> implements Map.Entry<K,V> {
 
   transient int modCount;//被修改的次数
 ```
->   其中加载因子是表示Hash表中元素的填满的程度。加载因子越大,填满的元素越多,好处是,空间利用率高了,但冲突的机会加大了；反之,加载因子越小,填满的元素越少,好处是冲突的机会减小了,但空间浪费多了。冲突的机会越大,则查找的成本越高。反之,查找的成本越小，查找时间就越小。因此,必须在 "冲突的机会"与"空间利用率"之间寻找一种平衡与折衷。这种平衡与折衷本质上是数据结构中有名的"时-空"矛盾的平衡与折衷.
-    如果机器内存足够，并且想要提高查询速度的话可以将加载因子设置小一点；相反如果机器内存紧张，并且对查询速度没有什么要求的话可以将加载因子设置大一点。不过一般我们都不用去设置它，让它取默认值0.75就好了。
+>   其中加载因子是表示Hash表中元素的填满的程度。加载因子越大,填满的元素越多,好处是,空间利用率高了,但冲突的机会加大了；反之,加载因子越小,填满的元素越少,好处是冲突的机会减小了。但空间浪费多了，冲突的机会越大,则查找的成本越高。反之,查找的成本越小，查找时间就越小。因此,必须在 "冲突的机会"与"空间利用率"之间寻找一种平衡与折衷。这种平衡与折衷本质上是数据结构中有名的"时-空"矛盾的平衡与折衷。
+    如果机器内存足够，并且想要提高查询速度的话可以将加载因子设置小一点；相反如果机器内存紧张，并且对查询速度没有什么要求的话可以将加载因子设置大一点。不过一般我们都不用去设置它，让它取默认值0.75就好了。
     
 * 下面看看HashMap的几个构造方法：
 ```Java
@@ -194,28 +194,28 @@ static class Entry<K,V> implements Map.Entry<K,V> {
 >   这个方法非常巧妙，它通过 h & (table.length -1) 来得到该对象的保存位，而HashMap底层数组的长度总是 2 的n 次方，这是HashMap在速度上的优化。当length总是 2 的n次方时，h& (length-1)运算等价于对length取模，也就是h%length，但是&比%具有更高的效率。当数组长度为2的n次幂的时候，不同的key算得得index相同的几率较小，那么数据在数组上分布就比较均匀，也就是说碰撞的几率小，相对的，查询的时候就不用遍历某个位置上的链表，这样查询效率也就较高了。
     下面我们继续回到put方法里面，前面已经计算出索引的值了，看到第6到14行，如果数组中该索引的位置的链表已经存在key相同的对象，则将其覆盖掉并返回原先的值。如果没有与key相同的键，则调用addEntry方法创建一个Entry对象，addEntry方法如下：
 ```Java
-void addEntry(int hash, K key, V value, int bucketIndex) {
-        Entry<K,V> e = table[bucketIndex]; //如果要加入的位置有值，将该位置原先的值设置为新entry的next,也就是新entry链表的下一个节点
-        table[bucketIndex] = new Entry<>(hash, key, value, e);
-        if (size++ >= threshold) //如果大于临界值就扩容
-            resize(2 * table.length); //以2的倍数扩容
-    }
+1 void addEntry(int hash, K key, V value, int bucketIndex) {
+2         Entry<K,V> e = table[bucketIndex]; //如果要加入的位置有值，将该位置原先的值设置为新entry的next,也就是新entry链表的下一个节点
+3         table[bucketIndex] = new Entry<>(hash, key, value, e);
+4         if (size++ >= threshold) //如果大于临界值就扩容
+5             resize(2 * table.length); //以2的倍数扩容
+6     }
 ```
 >   参数bucketIndex就是indexFor函数计算出来的索引值，第2行代码是取得数组中索引为bucketIndex的Entry对象，第3行就是用hash、key、value构建一个新的Entry对象放到索引为bucketIndex的位置，并且将该位置原先的对象设置为新对象的next构成链表。
 　　第4行和第5行就是判断put后size是否达到了临界值threshold，如果达到了临界值就要进行扩容，HashMap扩容是扩为原来的两倍。resize()方法如下：
 ```Java
-void resize(int newCapacity) {
-        Entry[] oldTable = table;
-        int oldCapacity = oldTable.length;
-        if (oldCapacity == MAXIMUM_CAPACITY) {
-            threshold = Integer.MAX_VALUE;
-            return;
-        }
-
-        Entry[] newTable = new Entry[newCapacity];
-        transfer(newTable);//用来将原先table的元素全部移到newTable里面
-        table = newTable;  //再将newTable赋值给table
-        threshold = (int)(newCapacity * loadFactor);//重新计算临界值
-    }
+ 1 void resize(int newCapacity) {
+ 2         Entry[] oldTable = table;
+ 3         int oldCapacity = oldTable.length;
+ 4         if (oldCapacity == MAXIMUM_CAPACITY) {
+ 5             threshold = Integer.MAX_VALUE;
+ 6             return;
+ 7         }
+ 8 
+ 9         Entry[] newTable = new Entry[newCapacity];
+10         transfer(newTable);//用来将原先table的元素全部移到newTable里面
+11         table = newTable;  //再将newTable赋值给table
+12         threshold = (int)(newCapacity * loadFactor);//重新计算临界值
+13     }
 ```
 >   扩容是需要进行数组复制的，上面代码中第10行为复制数组，复制数组是非常消耗性能的操作，所以如果我们已经预知HashMap中元素的个数，那么预设元素的个数能够有效的提高HashMap的性能。
