@@ -111,41 +111,111 @@ static class Entry<K,V> implements Map.Entry<K,V> {
 
   transient int modCount;//被修改的次数
 ```
->   其中加载因子是表示Hash表中元素的填满的程度.若:加载因子越大,填满的元素越多,好处是,空间利用率高了,但:冲突的机会加大了.反之,加载因子越小,填满的元素越少,好处是:冲突的机会减小了,但:空间浪费多了.冲突的机会越大,则查找的成本越高.反之,查找的成本越小.因而,查找时间就越小.因此,必须在 "冲突的机会"与"空间利用率"之间寻找一种平衡与折衷. 这种平衡与折衷本质上是数据结构中有名的"时-空"矛盾的平衡与折衷.
+>   其中加载因子是表示Hash表中元素的填满的程度。加载因子越大,填满的元素越多,好处是,空间利用率高了,但冲突的机会加大了；反之,加载因子越小,填满的元素越少,好处是冲突的机会减小了,但空间浪费多了。冲突的机会越大,则查找的成本越高。反之,查找的成本越小，查找时间就越小。因此,必须在 "冲突的机会"与"空间利用率"之间寻找一种平衡与折衷。这种平衡与折衷本质上是数据结构中有名的"时-空"矛盾的平衡与折衷.
     如果机器内存足够，并且想要提高查询速度的话可以将加载因子设置小一点；相反如果机器内存紧张，并且对查询速度没有什么要求的话可以将加载因子设置大一点。不过一般我们都不用去设置它，让它取默认值0.75就好了。
     
 * 下面看看HashMap的几个构造方法：
 ```Java
-public HashMap(int initialCapacity, float loadFactor) {
-        //确保数字合法
-        if (initialCapacity < 0)
-            throw new IllegalArgumentException("Illegal initial capacity: " +
-                                               initialCapacity);
-        if (initialCapacity > MAXIMUM_CAPACITY)
-            initialCapacity = MAXIMUM_CAPACITY;
-        if (loadFactor <= 0 || Float.isNaN(loadFactor))
-            throw new IllegalArgumentException("Illegal load factor: " +
-                                               loadFactor);
+ 1 public HashMap(int initialCapacity, float loadFactor) {
+ 2         //确保数字合法
+ 3         if (initialCapacity < 0)
+ 4             throw new IllegalArgumentException("Illegal initial capacity: " +
+ 5                                                initialCapacity);
+ 6         if (initialCapacity > MAXIMUM_CAPACITY)
+ 7             initialCapacity = MAXIMUM_CAPACITY;
+ 8         if (loadFactor <= 0 || Float.isNaN(loadFactor))
+ 9             throw new IllegalArgumentException("Illegal load factor: " +
+10                                                loadFactor);
+11 
+12         // Find a power of 2 >= initialCapacity
+13         int capacity = 1;   //初始容量
+14         while (capacity < initialCapacity)   //确保容量为2的n次幂，使capacity为大于initialCapacity的最小的2的n次幂
+15             capacity <<= 1;
+16 
+17         this.loadFactor = loadFactor;
+18         threshold = (int)(capacity * loadFactor);
+19         table = new Entry[capacity];
+20         init();
+21     }
+22 
+23     public HashMap(int initialCapacity) {
+24         this(initialCapacity, DEFAULT_LOAD_FACTOR);
+25     }
+26 
+27     public HashMap() {
+28         this.loadFactor = DEFAULT_LOAD_FACTOR;
+29         threshold = (int)(DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
+30         table = new Entry[DEFAULT_INITIAL_CAPACITY];
+31         init();
+32     }
+```
+>
+    我们可以看到在构造HashMap的时候如果我们指定了加载因子和初始容量的话就调用第一个构造方法，否则的话就是用默认的。默认初始容量为16，默认加载因子为0.75。我们可以看到上面代码中13-15行，这段代码的作用是确保容量为2的n次幂，使capacity为大于initialCapacity的最小的2的n次幂，至于为什么要把容量设置为2的n次幂，我们等下再看。
+    下面看看HashMap存储数据的过程是怎样的，首先看看HashMap的put方法：
+```Java
+1 public V put(K key, V value) {
+ 2         if (key == null) //如果键为null的话，调用putForNullKey(value)
+ 3             return putForNullKey(value);
+ 4         int hash = hash(key.hashCode());//根据键的hashCode计算hash码
+ 5         int i = indexFor(hash, table.length);
+ 6         for (Entry<K,V> e = table[i]; e != null; e = e.next) { //处理冲突的，如果hash值相同，则在该位置用链表存储
+ 7             Object k;
+ 8             if (e.hash == hash && ((k = e.key) == key || key.equals(k))) { //如果key相同则覆盖并返回旧值
+ 9                 V oldValue = e.value;
+10                 e.value = value;
+11                 e.recordAccess(this);
+12                 return oldValue;
+13             }
+14         }
+15 
+16         modCount++;
+17         addEntry(hash, key, value, i);
+18         return null;
+19     }
+```
+>
+    当我们往hashmap中put元素的时候，先根据key的hash值得到这个元素在数组中的位置（即下标），然后就可以把这个元素放到对应的位置中了。如果这个元素所在的位子上已经存放有其他元素了，那么在同一个位子上的元素将以链表的形式存放，新加入的放在链头，最先加入的放在链尾。从hashMap中get元素时，首先计算key的hashcode，找到数组中对应位置的某一元素，然后通过key的equals方法在对应位置的链表中找到需要的元素。
 
-        Find a power of 2 >= initialCapacity
-        int capacity = 1;   //初始容量
-        while (capacity < initialCapacity)   //确保容量为2的n次幂，使capacity为大于initialCapacity的最小的2的n次幂
-            capacity <<= 1;
-
-        this.loadFactor = loadFactor;
-        threshold = (int)(capacity * loadFactor);
-        table = new Entry[capacity];
-        init();
-    }
-
-    public HashMap(int initialCapacity) {
-        this(initialCapacity, DEFAULT_LOAD_FACTOR);
-    }
-
-    public HashMap() {
-        this.loadFactor = DEFAULT_LOAD_FACTOR;
-        threshold = (int)(DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
-        table = new Entry[DEFAULT_INITIAL_CAPACITY];
-        init();
+    具体的实现是：
+当你的key为null时，会调用putForNullKey,HashMap允许key为null,这样的对像是放在table[0]中。
+如果不为空，则调用int hash = hash(key.hashCode());这是hashmap的一个自定义的hash,在key.hashCode()基础上进行二次hash
+```Java
+   static int hash(int h) {  
+         h ^= (h >>> 20) ^ (h >>> 12);  
+         return h ^ (h >>> 7) ^ (h >>> 4);  
+   }  
+```
+>得到hash码之后就会通过hash码去计算出应该存储在数组中的索引，计算索引的函数如下：
+```Java
+    static int indexFor(int h, int length) {  
+           return h & (length-1);  
     }
 ```
+>   这个方法非常巧妙，它通过 h & (table.length -1) 来得到该对象的保存位，而HashMap底层数组的长度总是 2 的n 次方，这是HashMap在速度上的优化。当length总是 2 的n次方时，h& (length-1)运算等价于对length取模，也就是h%length，但是&比%具有更高的效率。当数组长度为2的n次幂的时候，不同的key算得得index相同的几率较小，那么数据在数组上分布就比较均匀，也就是说碰撞的几率小，相对的，查询的时候就不用遍历某个位置上的链表，这样查询效率也就较高了。
+    下面我们继续回到put方法里面，前面已经计算出索引的值了，看到第6到14行，如果数组中该索引的位置的链表已经存在key相同的对象，则将其覆盖掉并返回原先的值。如果没有与key相同的键，则调用addEntry方法创建一个Entry对象，addEntry方法如下：
+```Java
+void addEntry(int hash, K key, V value, int bucketIndex) {
+        Entry<K,V> e = table[bucketIndex]; //如果要加入的位置有值，将该位置原先的值设置为新entry的next,也就是新entry链表的下一个节点
+        table[bucketIndex] = new Entry<>(hash, key, value, e);
+        if (size++ >= threshold) //如果大于临界值就扩容
+            resize(2 * table.length); //以2的倍数扩容
+    }
+```
+>   参数bucketIndex就是indexFor函数计算出来的索引值，第2行代码是取得数组中索引为bucketIndex的Entry对象，第3行就是用hash、key、value构建一个新的Entry对象放到索引为bucketIndex的位置，并且将该位置原先的对象设置为新对象的next构成链表。
+　　第4行和第5行就是判断put后size是否达到了临界值threshold，如果达到了临界值就要进行扩容，HashMap扩容是扩为原来的两倍。resize()方法如下：
+```Java
+void resize(int newCapacity) {
+        Entry[] oldTable = table;
+        int oldCapacity = oldTable.length;
+        if (oldCapacity == MAXIMUM_CAPACITY) {
+            threshold = Integer.MAX_VALUE;
+            return;
+        }
+
+        Entry[] newTable = new Entry[newCapacity];
+        transfer(newTable);//用来将原先table的元素全部移到newTable里面
+        table = newTable;  //再将newTable赋值给table
+        threshold = (int)(newCapacity * loadFactor);//重新计算临界值
+    }
+```
+>   扩容是需要进行数组复制的，上面代码中第10行为复制数组，复制数组是非常消耗性能的操作，所以如果我们已经预知HashMap中元素的个数，那么预设元素的个数能够有效的提高HashMap的性能。
