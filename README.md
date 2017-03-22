@@ -77,8 +77,8 @@ Object obj = new Object();这里的**obj**引用便是一个强引用。如果�
 >ConcurrentHashMap：在hashMap的基础上，ConcurrentHashMap将数据分为多个segment，默认16个（concurrency level），然后每次操作对一个segment加锁，避免多线程锁的几率，提高并发效率。
 
 * 先看看HashMap类中的一些关键属性：
->
-transient Entry[] table;//存储元素的实体数组
+```Java
+  transient Entry[] table;//存储元素的实体数组
 
   transient int size;//存放元素的个数
 
@@ -87,10 +87,10 @@ transient Entry[] table;//存储元素的实体数组
   final float loadFactor; //加载因子
 
   transient int modCount;//被修改的次数
-
+```
 
 * 下面看看HashMap的几个构造方法：
->
+```Java
 public HashMap(int initialCapacity, float loadFactor) {
         //确保数字合法
         if (initialCapacity < 0)
@@ -102,7 +102,7 @@ public HashMap(int initialCapacity, float loadFactor) {
             throw new IllegalArgumentException("Illegal load factor: " +
                                                loadFactor);
 
-        // Find a power of 2 >= initialCapacity
+        Find a power of 2 >= initialCapacity
         int capacity = 1;   //初始容量
         while (capacity < initialCapacity)   //确保容量为2的n次幂，使capacity为大于initialCapacity的最小的2的n次幂
             capacity <<= 1;
@@ -123,4 +123,4 @@ public HashMap(int initialCapacity, float loadFactor) {
         table = new Entry[DEFAULT_INITIAL_CAPACITY];
         init();
     }
-
+```
