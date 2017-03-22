@@ -76,6 +76,29 @@ Object obj = new Object();这里的**obj**引用便是一个强引用。如果�
 >HashMap本质是数组加链表。根据key取得hash值，然后计算出数组下标，如果多个key对应到同一个下标，就用链表串起来，新插入的在前面。
 >ConcurrentHashMap：在hashMap的基础上，ConcurrentHashMap将数据分为多个segment，默认16个（concurrency level），然后每次操作对一个segment加锁，避免多线程锁的几率，提高并发效率。
 
+>HashMap底层就是一个数组结构，数组中存放的是一个Entry对象，如果产生的hash冲突，也就是说要存储的那个位置上面已经存储了对象了，这时候该位置存储的就是一个链表了。我们看看HashMap中Entry类的代码：
+```Java
+static class Entry<K,V> implements Map.Entry<K,V> {
+        final K key;
+        V value;
+        Entry<K,V> next;
+        final int hash;
+
+        /**
+         * Creates new entry.
+         */
+        Entry(int h, K k, V v, Entry<K,V> n) {
+            value = v;
+            next = n; //hash值冲突后存放在链表的下一个
+            key = k;
+            hash = h;
+        }
+
+        .........
+    }
+```
+>HashMap其实就是一个Entry数组，Entry对象中包含了键和值，其中next也是一个Entry对象，它就是用来处理hash冲突的，形成一个链表。
+
 * 先看看HashMap类中的一些关键属性：
 ```Java
   transient Entry[] table;//存储元素的实体数组
@@ -88,7 +111,9 @@ Object obj = new Object();这里的**obj**引用便是一个强引用。如果�
 
   transient int modCount;//被修改的次数
 ```
-
+>   其中加载因子是表示Hash表中元素的填满的程度.若:加载因子越大,填满的元素越多,好处是,空间利用率高了,但:冲突的机会加大了.反之,加载因子越小,填满的元素越少,好处是:冲突的机会减小了,但:空间浪费多了.冲突的机会越大,则查找的成本越高.反之,查找的成本越小.因而,查找时间就越小.因此,必须在 "冲突的机会"与"空间利用率"之间寻找一种平衡与折衷. 这种平衡与折衷本质上是数据结构中有名的"时-空"矛盾的平衡与折衷.
+    如果机器内存足够，并且想要提高查询速度的话可以将加载因子设置小一点；相反如果机器内存紧张，并且对查询速度没有什么要求的话可以将加载因子设置大一点。不过一般我们都不用去设置它，让它取默认值0.75就好了。
+    
 * 下面看看HashMap的几个构造方法：
 ```Java
 public HashMap(int initialCapacity, float loadFactor) {
