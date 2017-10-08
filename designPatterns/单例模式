@@ -1,6 +1,4 @@
-
 # 单例模式
-
 ## 简单介绍
 单例对象的类必须保证只有一个实例存在
 
@@ -20,8 +18,7 @@
 ## 代码实现
 
 ### 饿汉式
-```java
-
+```Java
 public class Singleton1 {
 
     private static Singleton1 sInstance = new Singleton1();
@@ -36,7 +33,6 @@ public class Singleton1 {
     }
 
 }
-
 ```
 
 #### 优点
