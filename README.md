@@ -1,4 +1,6 @@
 # StudyNode
 
 
-StudyNode中主要包含关于java、Android、数据结构以及网络方面的一些知识点!
+## 设计模式
+
+* [单例模式](https://github.com/jianjiandandande/StudyNode/blob/master/designPatterns/单例模式.md)
