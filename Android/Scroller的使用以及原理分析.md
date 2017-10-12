@@ -2,12 +2,12 @@
   弹性滑动对象，用于实现View的弹性滑动。我们知道，当使用View的scrollTo/scrollBy方法来进行滑动时，其过程是瞬间完成的，这种没有过渡效果的滑动用户体验是
   非常差的。而Scroller可以用来实现具有过渡效果的滑动，因为它不是在一瞬间完成的，而是在一定的时间间隔内完成的。
 
-  ##Scroller使用的一般步骤
-  * 1. 创建Scroller的实例 
-  * 2. 调用startScroll()方法来初始化滚动数据并刷新界面 
-  * 3. 重写computeScroll()方法，并在其内部完成平滑滚动的逻辑 
+  ## Scroller使用的一般步骤
+  * 创建Scroller的实例 
+  * 调用startScroll()方法来初始化滚动数据并刷新界面 
+  * 重写computeScroll()方法，并在其内部完成平滑滚动的逻辑 
   
-  ##Scroller典型的使用方法
+  ## Scroller典型的使用方法
   ```java
   private Scroller mScroller;
   
