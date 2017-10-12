@@ -1,6 +1,5 @@
 # StudyNode
 
-
 ## 设计模式
 
 * [单例模式](https://github.com/jianjiandandande/StudyNode/blob/master/designPatterns/单例模式.md)
@@ -12,3 +11,6 @@
 * [中介者模式](https://github.com/jianjiandandande/StudyNode/blob/master/designPatterns/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F.md)
 
 * [享元模式](https://github.com/jianjiandandande/StudyNode/blob/master/designPatterns/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F.md)
+
+## Android
+* [Android中的Scroller的原理分析]()
