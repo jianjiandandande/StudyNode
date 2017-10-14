@@ -153,12 +153,12 @@ ViewGroup中的invalidateChild方法：
 
 
 #### draw
-* 1. Draw the background
-* 2. If necessary, save the canvas' layers to prepare for fading
-* 3. Draw view's content
-* 4. Draw children
-* 5. If necessary, draw the fading edges and restore layers
-* 6. Draw decorations (scrollbars for instance)
+* Draw the background
+* If necessary, save the canvas' layers to prepare for fading
+* Draw view's content
+* Draw children
+* If necessary, draw the fading edges and restore layers
+* Draw decorations (scrollbars for instance)
 
 ### ViewGroup
 是一个容器  所以需要测量子view 还需要对子view进行摆放
