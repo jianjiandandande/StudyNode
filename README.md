@@ -25,6 +25,8 @@
 * [组合模式](https://github.com/jianjiandandande/StudyNode/blob/master/designPatterns/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F.md)
 
 * [装饰者模式](https://github.com/jianjiandandande/StudyNode/blob/master/designPatterns/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F.md)
+
+* [访问者模式](https://github.com/jianjiandandande/StudyNode/blob/master/designPatterns/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F.md)  
 ## Android
 * [Android中的Scroller的原理分析](https://github.com/jianjiandandande/StudyNode/blob/master/Android/Scroller%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90.md)
 * [Android中的UI绘制流程](https://github.com/jianjiandandande/StudyNode/blob/master/Android/UI%E7%BB%98%E5%88%B6%E6%B5%81%E7%A8%8B.md)
