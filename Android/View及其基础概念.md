@@ -136,3 +136,4 @@ computescroll方法配合使用才能共同完成这个功能。那么如何使�
       }
   }
 ```
+至于它为什么可以实现弹性滑动，请移步到[Sroller原理](https://github.com/jianjiandandande/StudyNode/blob/master/Android/Scroller%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90.md)
