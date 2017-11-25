@@ -41,3 +41,5 @@
 * [View的滑动](https://github.com/jianjiandandande/StudyNode/blob/master/Android/View%E7%9A%84%E6%BB%91%E5%8A%A8.md)
 
 * [View的弹性滑动](https://github.com/jianjiandandande/StudyNode/blob/master/Android/View%E7%9A%84%E5%BC%B9%E6%80%A7%E6%BB%91%E5%8A%A8.md)
+
+* [事件分发机制](https://github.com/jianjiandandande/StudyNode/blob/master/Android/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6.md)
