@@ -113,7 +113,7 @@ velocityTracker.computeCurrentVelocity(100)来获取速度，那么得到的速�
 
 ### Scroller
 
-弹性滑动对象，用于实观Wew的弹性滑动，我们知道，当使用View的scrollTo/scrollBy方法来进行滑动时，其过程是瞬间完成的，这个没有过渡效果的滑动用户体验不好。这个
+弹性滑动对象，用于实观ew的弹性滑动，我们知道，当使用View的scrollTo/scrollBy方法来进行滑动时，其过程是瞬间完成的，这个没有过渡效果的滑动用户体验不好。这个
 时候就可以使用Scroller米实现有过渡效果的滑动，其过程不是瞬间完成的，而是在一定的时间间隔内完成的。Scroller 本身无法让View 弹性滑动，它需要和View 的
 computescroll方法配合使用才能共同完成这个功能。那么如何使用Scroller呢?它的典型代码是固定的：
 ```java
