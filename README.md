@@ -34,3 +34,4 @@
 ## Android
 * [Android中的Scroller的原理分析](https://github.com/jianjiandandande/StudyNode/blob/master/Android/Scroller%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90.md)
 * [Android中的UI绘制流程](https://github.com/jianjiandandande/StudyNode/blob/master/Android/UI%E7%BB%98%E5%88%B6%E6%B5%81%E7%A8%8B.md)
+* [View及其基础概念](https://github.com/jianjiandandande/StudyNode/blob/master/Android/View%E5%8F%8A%E5%85%B6%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5.md)
