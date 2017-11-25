@@ -27,7 +27,7 @@ Android，大部分显示系统都是按照这个标准来定义坐标系的。
 容器的偏移量。这几个参数也是相对于父容器的坐标，并且translationX和translationY的默认值是0，和View的四个基本的位置参数一样，View也为它们提供了get/sct方法，这
 几个参数的换算关系如下所示。
 
-```
+```java
     x = left+tranglationX;
     y = top+tranglationY;
 ```
@@ -67,12 +67,12 @@ get(getContext()).getScaledTouchSlop()。个常量有什么意义呢？当我们
 ### VelocityTracker
 
 速度追踪，用于追踪手指在滑动过程中的速度，包括水平和垂直方向的速度。它的使用过程很简单，省先，在View 的onTouchEvet方法中追踪当前单击事件的速度：
-```
+```java
     VelocityTracker velocityTracker = VelocityTracker.obtain();
     velocityTracker.addMovenent(event):
 ```
 接着，当我们想知道当前的滑动速度时，这个时候可以采用如下方式来获得当前的速度:
-```
+```java
     velocityrracker.computecurrentVelocity (1000);//计算速度
     int xVelocity = (int)velocityTracker.getXVelocity();//获取速度
     int yVelocity = (int)velocityTracker.getYVelocity();
@@ -89,7 +89,7 @@ velocityTracker.computeCurrentVelocity(100)来获取速度，那么得到的速�
 100像素/每100ms（这里假设滑动过程是匀速的）。
 使用完毕之后，记得要调用clear方法来重置并回收内存。
 
-```
+```java
     velocityrracker.clear();//重置
     velocityrracker.recycle();//回收内存
 ```
@@ -105,7 +105,7 @@ velocityTracker.computeCurrentVelocity(100)来获取速度，那么得到的速�
 ```
 接着，接管目标View的onTouchEvent方法，在待监听View的onTouchEvent方法中
 添加如下实现：
-```
+```java
     boolean consume=mGestureDetector.onTouchEvent(event);
     return consume;
 ```
@@ -116,7 +116,7 @@ velocityTracker.computeCurrentVelocity(100)来获取速度，那么得到的速�
 弹性滑动对象，用于实观Wew的弹性滑动，我们知道，当使用View的scrollTo/scrollBy方法来进行滑动时，其过程是瞬间完成的，这个没有过渡效果的滑动用户体验不好。这个
 时候就可以使用Scroller米实现有过渡效果的滑动，其过程不是瞬间完成的，而是在一定的时间间隔内完成的。Scroller 本身无法让View 弹性滑动，它需要和View 的
 computescroll方法配合使用才能共同完成这个功能。那么如何使用Scroller呢?它的典型代码是固定的：
-```
+```java
   Scroller scroller = new Scroller(mContext);
 
   //缓慢滚动到指定位置
