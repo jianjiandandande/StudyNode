@@ -50,7 +50,7 @@ public void setContentView(int layoutResID) {
 setContentView() -->window类的setContentView() -->PhoneWindow的setContentView();
 
 * installDecor()方法的实现
-```
+```java
         private void installDecor() {
             if (mDecor == null) {
                 mDecor = generateDecor(-1);//new 一个DecorView,这个DecorView中包含了一个系统布局，我们开发时所写的布局最终都被添加到这个布局中的帧布局之中
@@ -72,7 +72,7 @@ setContentView() -->window类的setContentView() -->PhoneWindow的setContentView
 
 * 在PhoneWindow的setContentView()中，调用了ViewGroup的addView()方法,
     
-```
+```java
     public void addView(View child, int index, LayoutParams params) {
 
         ...
@@ -85,7 +85,7 @@ setContentView() -->window类的setContentView() -->PhoneWindow的setContentView
     
 可以看到，addView中调用了invalidate()，让我们来看看invalidate方法的实现：
 
-```
+```java
     public void invalidate(Rect dirty) {
         final int scrollX = mScrollX;
         final int scrollY = mScrollY;
@@ -97,7 +97,7 @@ setContentView() -->window类的setContentView() -->PhoneWindow的setContentView
     
 可以看到，invalidate中调用了invalidateInternal()，让我们来看看invalidateInternal方法的实现：
     
-```
+```java
     void invalidateInternal(int l, int t, int r, int b, boolean invalidateCache,
                boolean fullInvalidate) {
 
@@ -114,7 +114,7 @@ setContentView() -->window类的setContentView() -->PhoneWindow的setContentView
     
 ViewGroup中的invalidateChild方法：
     
-```
+```java
        public final void invalidateChild(View child, final Rect dirty) {
 
            ...
@@ -137,7 +137,7 @@ ViewGroup中的invalidateChild方法：
 
        performTraversals()是ViewRootImpl类中的关键方法
 
-**performTraversals()方法做了三件事：***
+**performTraversals()方法做了三件事：**
 * performMeasure() 测量  mView.measure()
 * performLayout() 布局   host.layout() host本身就是view
 * performDraw() 绘制     mView.draw(canvas);
