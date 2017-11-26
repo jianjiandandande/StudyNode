@@ -33,7 +33,7 @@ WindowManager接口中定义了Window的类型
 @see #TYPE_INPUT_METHOD_DIALOG
 ```
     
-* 然后我们看一看setContentView的实现：
+* 然后我们看一看phoneWindow.setContentView的实现：
     
 ```java
 @Override
