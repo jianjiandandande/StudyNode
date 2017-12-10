@@ -55,3 +55,5 @@
 * [支持向量机](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA.md)
 
 * [K-近邻算法](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/K-%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95.md)
+
+* [SVM损失函数](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/SVM%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.md)
