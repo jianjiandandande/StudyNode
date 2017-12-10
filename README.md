@@ -57,3 +57,5 @@
 * [K-近邻算法](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/K-%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95.md)
 
 * [SVM损失函数](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/SVM%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.md)
+
+* [SoftMax损失函数](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/SoftMax.md)
