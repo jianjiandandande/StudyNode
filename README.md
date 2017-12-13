@@ -61,3 +61,5 @@
 * [SoftMax损失函数](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/SoftMax.md)
 
 * [Xgboost](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/Xgboost.md)
+
+* [Adaboost](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/Adaboost.md)
