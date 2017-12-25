@@ -63,3 +63,5 @@
 * [Xgboost](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/Xgboost.md)
 
 * [Adaboost](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/Adaboost.md)
+
+* [自然语言处理](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86.md)
