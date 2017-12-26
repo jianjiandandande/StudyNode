@@ -27,6 +27,7 @@
 * [装饰者模式](https://github.com/jianjiandandande/StudyNode/blob/master/designPatterns/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F.md)
 
 * [访问者模式](https://github.com/jianjiandandande/StudyNode/blob/master/designPatterns/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F.md)  
+* [外观模式](https://github.com/jianjiandandande/StudyNode/edit/master/designPatterns/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F.md)
 
 * [适配器模式](https://github.com/jianjiandandande/StudyNode/blob/master/designPatterns/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F.md)
 
