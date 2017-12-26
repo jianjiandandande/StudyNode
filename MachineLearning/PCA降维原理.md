@@ -44,3 +44,5 @@
 
 协方差矩阵(对角线都为1)：
 ∑ = 1/(n-1)((X - x<均值>)T(X - x<均值>))
+
+## [参考代码](https://github.com/jianjiandandande/MachineLearning/blob/master/arithmeticLearn/PCA/PCALearn.py)
