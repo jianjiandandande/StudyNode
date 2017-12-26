@@ -65,3 +65,5 @@
 * [Adaboost](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/Adaboost.md)
 
 * [自然语言处理](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86.md)
+
+* [PCA降维原理](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/PCA%E9%99%8D%E7%BB%B4%E5%8E%9F%E7%90%86.md)
