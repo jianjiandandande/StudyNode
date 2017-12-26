@@ -38,3 +38,5 @@ KNN分类的计算复杂度和训练集中的文档数目成正比，也就是�
 ## 交叉验证
 
 在我们建立模型的过程中，我们可以通过交叉验证的方式来确定一些参数，使得模型的建立更加准确。
+
+## [参考代码](https://github.com/jianjiandandande/MachineLearning/blob/master/arithmeticLearn/KNN/KNNLearn.py)
