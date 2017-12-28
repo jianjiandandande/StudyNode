@@ -49,6 +49,8 @@
 
 ## MachineLearning
 
+* [线性回归](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.md)
+
 * [决策树](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/%E5%86%B3%E7%AD%96%E6%A0%91.md)
 
 * [贝叶斯算法](https://github.com/jianjiandandande/StudyNode/blob/master/MachineLearning/%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95.md)
