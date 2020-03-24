@@ -1,5 +1,5 @@
 
-## Cascade RCNN 2018
+## [Cascade RCNN 2018](./paper/Cascade_RCNN.pdf)
 
 ### 目前在目标检测中存在的问题
 在目标检测中，IOU是区分正负样本点关键。检测器以0.5为IOU的阈值时，它的检测性能不是特别好。 (FasterRcnn用的就是以0.5为IOU的阈值。)随着IOU阈值的增加，检测的能力在不断的降低。而导致这一问题出现的原因主要可以归结为以下两点：
@@ -68,7 +68,7 @@
 
 优点：
 * 避免过拟合
-* 级联的每个检测器中被优化的的IOU阈值越来越高=[enter description here](./paper/Cascade_RCNN.pdf)
+* 级联的每个检测器中被优化的的IOU阈值越来越高
 
 
 
