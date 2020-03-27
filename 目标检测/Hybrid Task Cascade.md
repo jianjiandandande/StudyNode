@@ -56,8 +56,9 @@ Cascade R-CNN 和 Mask R-CNN 的结合，在bbox AP上提升了3.5%，而在mask
 
 ### 我们的探索
 
-#### Cascade Mask R-CNN
 ![enter description here](./images/1585318942227.png)
+
+#### Cascade Mask R-CNN
 
 首先，我们设计了Cascade Mask R-CNN的结构，这个结构如上图中(a)所示，它仅仅是将Cascade R-CNN与Mask RCNN做了一个简单的结合，即在Cascade Mask R-CNN的每一个阶段引入Mask R-CNN结构。
 ![enter description here](./images/1585319263310.png)
