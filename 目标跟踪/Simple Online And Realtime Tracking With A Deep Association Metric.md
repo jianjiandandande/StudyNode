@@ -3,7 +3,7 @@
 
 SORT(Simple Online And Realtime Tracking)在多目标追踪方面的非常实用的一个算法，尤其**简单**且**有效**。
 
-随着目标检测技术的快速发展，`tracking-bydetection`已经逐渐成为了多目标追踪问题的核心方案。与此同时，多目标追踪问题也就成为了一个全局优化的问题，在整个视频batch当中。在这样的情况下，` Multiple Hypothesis Tracking (MHT) [8] and the Joint Probabilistic DataAssociationFilter(JPDAF)`这种相当传统的方法再一次被唤醒，而且取得了很不错的结果，但是他们增加了计算量以及实现的复杂性。
+随着目标检测技术的快速发展，`tracking-by-detection`已经逐渐成为了多目标追踪问题的核心方案。与此同时，多目标追踪问题也就成为了一个全局优化的问题，在整个视频batch当中。在这样的情况下，` Multiple Hypothesis Tracking (MHT) [8] and the Joint Probabilistic DataAssociationFilter(JPDAF)`这种相当传统的方法再一次被唤醒，而且取得了很不错的结果，但是他们增加了计算量以及实现的复杂性。
 
 SORT算法，采用`Kalman`滤波器在图像域进行预测，然后通过匈牙利算法进行逐帧的数据联合(依据bbox overlap)。这种简单的方法在高帧速率下获得了良好的性能。
 
