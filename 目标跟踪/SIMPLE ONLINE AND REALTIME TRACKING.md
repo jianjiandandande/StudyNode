@@ -1,4 +1,4 @@
-## [SIMPLE ONLINE AND REALTIME TRACKING](../目标检测/attachments/soft.pdf)
+## [SIMPLE ONLINE AND REALTIME TRACKING](./attachments/soft_1.pdf)
 
 
 ### 概述
