@@ -29,6 +29,8 @@ SiameseRPN包含了两个子网络：
 
 	* 在线跟踪，在线实时更新滤波器的权重
 
+	* 这些模板更新的方法都是在傅里叶域内进行使用的，但是它们可以广泛地应用到整个跟踪社区当中。
+
 	* 近年来，有人在基于相关滤波器的方法中用深度网络的特征去改善跟踪的精度，然而这种方式再model更新的时候有着比较大的时间损耗。
 
 * 基于深度网络
@@ -41,15 +43,15 @@ SiameseRPN包含了两个子网络：
 
 在本文中，作者证明了离线训练的基于深度学习的跟踪器在适当的设计下可以获得与SOTA的基于相关滤波器的方法相比具有竞争力的结果。其中的关键点就在于 Siamese-RPN的结构。
 
-受到**Faster-RCNN中RPN网络**的影响，我们在相应的feature map上执行proposal 的提取。不同于标准的RPN， 我们使用两个分支的相关特征图来提取proposal 。
+受到**Faster-RCNN中RPN网络**的影响，我们在Siamese子网络中，两个分支的特征图进行相关操作后得到的特征图上执行proposal 的提取。不同于标准的RPN， 我们使用两个分支的相关特征图来提取proposal 。
 
 在跟踪任务中，我们没有预先定义的类别，因此我们需要模板分支将目标的外观信息编码到RPN feature map中，以区分前景和背景。
 
-在Inference阶段，我们把网络可以理解为local one-shot detection framework，其中第一帧作为唯一的模板。我们将模板分支重新解释为参数，以预测像这样的元学习器的检测内核。
+在Inference阶段，我们把网络可以理解为local one-shot detection framework，其中第一帧作为唯一的模板。我们可以把这个模板当做是一个卷积核，它的参数是在网络中像meta-learner一样，学习得到的。
 
 * meta-learner以及检测分支只在RPN的监督下进行端到端的训练。
 
-* 模板分支：在在线跟踪过程中，对模板分支进行修剪以加快初始帧后的速度。
+* 模板分支：在在线跟踪过程中，对模板分支进行修剪以加快初始帧后的跟踪速度。
 
 **这是第一次将在线跟踪的任务当做one-shot detection**
 
@@ -68,7 +70,7 @@ SiameseRPN包含了两个子网络：
 
 * 提出了Siamese RPN，可以在离线阶段使用大规模的数据pairs端到端地训练来完成跟踪的任务
 
-* 在在线跟踪过程中，将proposal framework 转化为一个local one-shot detection 任务，可以细化方案，抛弃昂贵的多尺度测试。
+* 在在线跟踪过程中，将proposal framework 转化为一个local one-shot detection 任务，可以细化proposal，抛弃昂贵的多尺度测试。
 
 * 可以在实时的挑战赛中实现领先的表现，160FPS ，准确率和相率都很优。
 
@@ -87,7 +89,7 @@ Siamese-RPN framework 包含了两个部分，分别为Siamese 子网络和regio
 
 * 这个子网络又包含了两个分支(这两个分支在CNN中共享参数，使得两个分支进行的输入经历相同的编码，方便在后续的任务中进行使用)：
 
-	* 模板分支：将前面帧中的对象块作为输入
+	* 模板分支：将历史帧中的对象块作为输入
 
 	* 检测分支：将当前帧中的对象块作为输入
 
@@ -130,7 +132,7 @@ The template feature maps [φ(z)]cls and [φ(z)]reg are used as kernels and ⋆ 
 
 ####  **Training phase: End-to-end train SiameseRPN**
 
-训练过程中，样本pairs选自ILSVRC(有随机间隔)，和Youtube-BB(连续的)，模板分支与检测分支提取的两帧图像是来源于一个视频序列的。我们使用了ImageNet上的预训练模型，并且使用SGD优化函数。在训练回归分支的时候，我们采用了例如仿射变换的图像增强的技术。
+训练过程中，样本pairs选自ILSVRC(有随机间隔)，和Youtube-BB(连续的)，模板分支与检测分支提取的两帧图像是来源于一个视频序列的。Siamese子网络使用了ImageNet上的预训练模型，并且使用SGD优化函数。在训练回归分支的时候，我们采用了例如仿射变换的图像增强的技术。
 
 我们注意到视频当中，相同的目标在邻近的几帧中的变化不是很大。所以在确定anchor的时候，我们只采用了一个尺度，加了5种不同的ratio，来生成我们的anchor。
 
@@ -139,7 +141,7 @@ The template feature maps [φ(z)]cls and [φ(z)]reg are used as kernels and ⋆ 
 
 ####  Tracking as one-shot detection
 
-在本节中，我们首先将跟踪任务表示为局部一次检测任务。
+在本节中，我们首先将跟踪任务表示为局部一次检测任务。然后，对该解释下的推理阶段进行了详细的分析和简化，得到了加速解。
 
 **Formulation**
 
@@ -155,7 +157,7 @@ One-shot learning的目的是从感兴趣的类的单个模板z中学习参数W�
 
 ![enter description here](./images/1590995878154.png)
 
-现在我们重新定义Siamese的模板分支它的作用就是训练参数，然后**局部一次检测**任务中进行预测。这就是典型的 learning to learn process.
+现在我们重新定义Siamese的模板分支，它的作用就是训练参数，来预测**局部一次检测**任务中的核。这就是典型的 learning to learn process.
 
 在这样的模式下，这个模板分支主要用来编码类别信息到kernel中，然后检测分支用编码好的信息执行检测。
 
@@ -165,6 +167,9 @@ One-shot learning的目的是从感兴趣的类的单个模板z中学习参数W�
 
 
 #### Inference phase: Perform one-shot detection
+
+在上面，我们提到，我们将模板分支的输出作为局部检测的kernels，这个kernels包含了分类和回归两个部分。这两个kernels在初始帧给定GT标签后进行计算，且在后期的跟踪过程中是固定的。
+
 
 ![enter description here](./images/1591000411456.png)
 
@@ -212,7 +217,9 @@ PRO* = ![enter description here](./images/1590999613459.png)
 
 ![enter description here](./images/1591001295838.png)
 
-这些操作之后，排名前K的proposal在分类分数乘以时间惩罚之后重新排序。,NMS再筛选最终跟踪的bbox，**在最终的bbox被选择之后，target size会通过线性插值的方式进行更新，**以保证shape平滑地改变。
+这些操作之后，排名前K的proposal在分类分数乘以时间惩罚之后重新排序。,NMS再筛选最终跟踪的bbox，**在最终的bbox被选择之后，target size会通过线性插值的方式进行更新，以保证shape平滑地改变**。更新的方法如下：
+
+![enter description here](./images/1594198381357.png)
 
 
 ### 实验
