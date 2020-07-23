@@ -171,3 +171,19 @@ cosine annealing： 剩余的45epochs
 ## Conclusion
 
 本文通过分析视觉跟踪任务的独特特点和现有跟踪器的缺陷,提出了一系列在跟踪问题中对于目标状态评估的Guidelines。遵循这些Guidelines，我们提出了我们的方法，为分类和目标状态估计(G1)提供有效的方法，给出无歧义分类分数(G2)，无先验知识跟踪(G3)，并意识到估计质量(G4)。我们通过广泛的消融研究来验证所提出的Guidelines的有效性。我们展示了基于这些Guidelines的跟踪器在5个挑战性的基准上达到了最高的性能，同时仍然以90帧每秒的速度运行。
+
+
+## 复现结果
+
+* **GPU**: Tesla V100 * 2
+
+* **backbone**: googlenet V3
+
+* **dataset**
+	* train: LaSOT
+	* test: VOT2018
+* **result**
+
+| Tracker Name             | Accuracy | Robustness | Lost Number | EAO   |
+| ------------------------ | -------- | ---------- | ----------- | ----- |
+| siamfcpp_googlenet-lasot | 0.450    | 0.609      | 130.0       | 0.147 |
